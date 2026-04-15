@@ -1,0 +1,36 @@
+# Credentials - never commit real config
+config.yaml
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test output
+.coverage
+htmlcov/
+junit.xml
+test-results/
+
+# Logs
+*.log

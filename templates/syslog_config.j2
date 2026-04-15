@@ -1,0 +1,66 @@
+rm /etc/config/va_eventd
+touch /etc/config/va_eventd
+
+uci set va_eventd.main=va_eventd
+uci set va_eventd.main.event_queue_file='/tmp/event_buffer'
+uci set va_eventd.main.event_queue_size='128K'
+uci set va_eventd.main.event_queue_persistence_enabled='yes'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='MonitorSyslog1'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='CPE: %{serial}: Wrong SSH Password Attempt for User %{p2} from %{p3}'
+uci set va_eventd.@target[-1].type='syslog'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='MonitorSyslog2'
+uci set va_eventd.@target[-1].type='syslog'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='CPE: %{serial}: Successful SSH Access for User %{p2} from %{p3}'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='MonitorSyslog3'
+uci set va_eventd.@target[-1].type='syslog'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='CPE: %{serial}: Wrong Web Password for User %{p1}'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='MonitorSyslog4'
+uci set va_eventd.@target[-1].type='syslog'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='CPE: %{serial}: Successful Web Access for User %{p1}'
+
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='yes'
+uci set va_eventd.@forwarding[-1].className='auth'
+uci set va_eventd.@forwarding[-1].eventName='BadPasswordSSH'
+uci set va_eventd.@forwarding[-1].severity='debug-debug'
+uci set va_eventd.@forwarding[-1].target='MonitorSyslog1'
+
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='yes'
+uci set va_eventd.@forwarding[-1].className='auth'
+uci set va_eventd.@forwarding[-1].eventName='BadPasswordLuCI'
+uci set va_eventd.@forwarding[-1].severity='debug-debug'
+uci set va_eventd.@forwarding[-1].target='MonitorSyslog3'
+
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='yes'
+uci set va_eventd.@forwarding[-1].className='auth'
+uci set va_eventd.@forwarding[-1].eventName='LoginSSH'
+uci set va_eventd.@forwarding[-1].severity='debug-debug'
+uci set va_eventd.@forwarding[-1].target='MonitorSyslog2'
+
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='yes'
+uci set va_eventd.@forwarding[-1].className='auth'
+uci set va_eventd.@forwarding[-1].eventName='LoginLuCI'
+uci set va_eventd.@forwarding[-1].severity='debug-debug'
+uci set va_eventd.@forwarding[-1].target='MonitorSyslog4'
+
+uci commit va_eventd
+/etc/init.d/va_eventd restart

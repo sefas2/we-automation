@@ -1,0 +1,125 @@
+rm /etc/config/snmpd
+touch /etc/config/snmpd
+
+uci set snmpd.agent=agent
+uci set snmpd.agent.agentaddress='UDP:161'
+
+uci set snmpd.local=trapreceiver
+uci set snmpd.local.host='192.168.100.254'
+uci set snmpd.local.port='162'
+uci set snmpd.local.version='v1'
+
+uci add snmpd usm_user
+uci set snmpd.@usm_user[-1].name='OrionUser'
+uci set snmpd.@usm_user[-1].auth_protocol='SHA1'
+uci set snmpd.@usm_user[-1].auth_password='testpass'
+uci set snmpd.@usm_user[-1].priv_protocol='AES128'
+uci set snmpd.@usm_user[-1].priv_password='testpass'
+uci set snmpd.@usm_user[-1].oid='iso.3.6.1'
+
+uci add snmpd usm_user
+uci set snmpd.@usm_user[-1].name='user1'
+uci set snmpd.@usm_user[-1].auth_protocol='MD5'
+uci set snmpd.@usm_user[-1].auth_password='virtual1'
+uci set snmpd.@usm_user[-1].priv_protocol='DES'
+uci set snmpd.@usm_user[-1].priv_password='virtual1'
+uci set snmpd.@usm_user[-1].oid='.1.3.6.1.2.1'
+
+uci add snmpd usm_user
+uci set snmpd.@usm_user[-1].name='user2'
+uci set snmpd.@usm_user[-1].auth_protocol='SHA'
+uci set snmpd.@usm_user[-1].auth_password='virtual1'
+uci set snmpd.@usm_user[-1].priv_protocol='DES'
+uci set snmpd.@usm_user[-1].priv_password='virtual1'
+uci set snmpd.@usm_user[-1].oid='.1.3.6.1.2.1.1'
+
+uci add snmpd usm_user
+uci set snmpd.@usm_user[-1].name='user3'
+uci set snmpd.@usm_user[-1].auth_protocol='MD5'
+uci set snmpd.@usm_user[-1].auth_password='virtual1'
+uci set snmpd.@usm_user[-1].priv_protocol='AES'
+uci set snmpd.@usm_user[-1].priv_password='virtual1'
+uci set snmpd.@usm_user[-1].oid='.1.3.6.1.2.1.2'
+
+uci add snmpd usm_user
+uci set snmpd.@usm_user[-1].name='user4'
+uci set snmpd.@usm_user[-1].auth_protocol='SHA'
+uci set snmpd.@usm_user[-1].auth_password='virtual1'
+uci set snmpd.@usm_user[-1].priv_protocol='AES'
+uci set snmpd.@usm_user[-1].priv_password='virtual1'
+uci set snmpd.@usm_user[-1].oid='.1.3.6.1.2.1.11'
+
+uci add snmpd usm_user
+uci set snmpd.@usm_user[-1].name='admin'
+uci set snmpd.@usm_user[-1].auth_protocol='MD5'
+uci set snmpd.@usm_user[-1].auth_password='virtual1'
+uci set snmpd.@usm_user[-1].priv_protocol='DES'
+uci set snmpd.@usm_user[-1].priv_password='virtual1'
+
+uci set snmpd.public=com2sec
+uci set snmpd.public.secname='ro'
+uci set snmpd.public.source='default'
+uci set snmpd.public.community='public'
+
+uci set snmpd.private=com2sec
+uci set snmpd.private.secname='rw'
+uci set snmpd.private.source='localhost'
+uci set snmpd.private.community='private'
+
+uci set snmpd.public_v1=group
+uci set snmpd.public_v1.group='public'
+uci set snmpd.public_v1.version='v1'
+uci set snmpd.public_v1.secname='ro'
+
+uci set snmpd.public_v2c=group
+uci set snmpd.public_v2c.group='public'
+uci set snmpd.public_v2c.version='v2c'
+uci set snmpd.public_v2c.secname='ro'
+
+uci set snmpd.public_usm=group
+uci set snmpd.public_usm.group='public'
+uci set snmpd.public_usm.version='usm'
+uci set snmpd.public_usm.secname='ro'
+
+uci set snmpd.private_v1=group
+uci set snmpd.private_v1.group='private'
+uci set snmpd.private_v1.version='v1'
+uci set snmpd.private_v1.secname='rw'
+
+uci set snmpd.private_v2c=group
+uci set snmpd.private_v2c.group='private'
+uci set snmpd.private_v2c.version='v2c'
+uci set snmpd.private_v2c.secname='rw'
+
+uci set snmpd.private_usm=group
+uci set snmpd.private_usm.group='private'
+uci set snmpd.private_usm.version='usm'
+uci set snmpd.private_usm.secname='rw'
+
+uci set snmpd.all=view
+uci set snmpd.all.viewname='all'
+uci set snmpd.all.type='included'
+uci set snmpd.all.oid='.1'
+
+uci set snmpd.public_access=access
+uci set snmpd.public_access.group='public'
+uci set snmpd.public_access.context='none'
+uci set snmpd.public_access.version='any'
+uci set snmpd.public_access.level='noauth'
+uci set snmpd.public_access.prefix='exact'
+uci set snmpd.public_access.read='all'
+uci set snmpd.public_access.write='none'
+uci set snmpd.public_access.notify='none'
+
+uci set snmpd.private_access=access
+uci set snmpd.private_access.group='private'
+uci set snmpd.private_access.context='none'
+uci set snmpd.private_access.version='any'
+uci set snmpd.private_access.level='noauth'
+uci set snmpd.private_access.prefix='exact'
+uci set snmpd.private_access.read='all'
+uci set snmpd.private_access.write='all'
+uci set snmpd.private_access.notify='all'
+
+uci commit snmpd
+/etc/init.d/snmpd restart

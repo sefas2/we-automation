@@ -1,0 +1,5 @@
+#### Requirements ####
+
+"""
+Netmiko, Pytest, Selenium, Requests, Pyyaml, jinja2
+"""

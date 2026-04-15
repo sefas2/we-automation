@@ -1,0 +1,7 @@
+uci set system.ntp=timeserver
+uci set system.ntp.server={{ ntp_server }}
+uci set system.ntp.interval_hours=auto
+uci set system.ntp.listen=any
+
+uci commit system
+/etc/init.d/chrony restart

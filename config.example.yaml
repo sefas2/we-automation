@@ -1,0 +1,15 @@
+# config.example.yaml
+# Copy this file to config.yaml and fill in your actual values.
+# config.yaml is excluded from version control via .gitignore
+ 
+router:
+    device_type: linux
+    host: 192.168.x.x        # your router's IP address
+    username: your_username
+    password: your_password
+ 
+wrong_password:
+    device_type: linux
+    host: 192.168.x.x        # same IP as above
+    username: your_username
+    password: intentionally_wrong_password   # used for negative login tests

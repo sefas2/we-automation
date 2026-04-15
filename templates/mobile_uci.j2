@@ -1,0 +1,20 @@
+uci set network.MOBILE1=interface
+uci set network.MOBILE1.proto=3g
+uci set network.MOBILE1.sim=1
+uci set network.MOBILE1.service_order=auto
+uci set network.MOBILE1.auto=0
+uci set network.MOBILE1.apn='{{ apn }}'
+uci set network.MOBILE1.username='{{ username }}'
+uci set network.MOBILE1.password='{{ password }}'
+
+uci set network.MOBILE2=interface
+uci set network.MOBILE2.proto=3g
+uci set network.MOBILE2.sim=2
+uci set network.MOBILE2.service_order=auto
+uci set network.MOBILE2.auto=0
+uci set network.MOBILE2.apn='{{ apn }}'
+uci set network.MOBILE2.username='{{ username }}'
+uci set network.MOBILE2.password='{{ password }}'
+
+uci commit network
+/etc/init.d/network restart

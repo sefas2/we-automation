@@ -1,0 +1,170 @@
+rm /etc/config/va_eventd
+touch /etc/config/va_eventd
+
+uci set va_eventd.main=va_eventd
+uci set va_eventd.main.enabled='yes'
+uci set va_eventd.main.event_queue_file='/tmp/event_buffer'
+uci set va_eventd.main.event_queue_size='128K'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='SSHLogin'
+uci set va_eventd.@target[-1].enabled='yes'
+uci set va_eventd.@target[-1].type='snmptrap'
+uci set va_eventd.@target[-1].community='public'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='Router: %{serial}: SSH login: user %{p2} from %{p3}'
+uci set va_eventd.@target[-1].snmp_version='1'
+uci set va_eventd.@target[-1].acknowledgement_required='0'
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='1'
+uci set va_eventd.@forwarding[-1].className='auth'
+uci set va_eventd.@forwarding[-1].eventName='LoginSSH'
+uci set va_eventd.@forwarding[-1].target='SSHLogin'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='SSHBadPasswd'
+uci set va_eventd.@target[-1].enabled='yes'
+uci set va_eventd.@target[-1].type='snmptrap'
+uci set va_eventd.@target[-1].community='public'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='Router: %{serial}: SSH login attempt from %{p3}: bad password for user %{p2}'
+uci set va_eventd.@target[-1].snmp_version='1'
+uci set va_eventd.@target[-1].acknowledgement_required='0'
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='1'
+uci set va_eventd.@forwarding[-1].className='auth'
+uci set va_eventd.@forwarding[-1].eventName='BadPasswordSSH'
+uci set va_eventd.@forwarding[-1].target='SSHBadPasswd'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='MOBILEUP'
+uci set va_eventd.@target[-1].enabled='yes'
+uci set va_eventd.@target[-1].type='snmptrap'
+uci set va_eventd.@target[-1].community='public'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='Router: %{serial}: 3g link %{p1} up using SIM #%{p2} in %{p3} %{p4} network'
+uci set va_eventd.@target[-1].snmp_version='1'
+uci set va_eventd.@target[-1].acknowledgement_required='0'
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='1'
+uci set va_eventd.@forwarding[-1].className='mobile'
+uci set va_eventd.@forwarding[-1].eventName='LinkUp'
+uci set va_eventd.@forwarding[-1].target='MOBILEUP'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='MOBILEDOWN'
+uci set va_eventd.@target[-1].enabled='yes'
+uci set va_eventd.@target[-1].type='snmptrap'
+uci set va_eventd.@target[-1].community='public'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='Router: %{serial}: 3g link %{p1} down'
+uci set va_eventd.@target[-1].snmp_version='1'
+uci set va_eventd.@target[-1].acknowledgement_required='0'
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='1'
+uci set va_eventd.@forwarding[-1].className='mobile'
+uci set va_eventd.@forwarding[-1].eventName='LinkDown'
+uci set va_eventd.@forwarding[-1].target='MOBILEDOWN'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='simin'
+uci set va_eventd.@target[-1].enabled='yes'
+uci set va_eventd.@target[-1].type='snmptrap'
+uci set va_eventd.@target[-1].community='public'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='Router: %{serial}: SIM card #%{p1} inserted'
+uci set va_eventd.@target[-1].snmp_version='1'
+uci set va_eventd.@target[-1].acknowledgement_required='0'
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='1'
+uci set va_eventd.@forwarding[-1].className='mobile'
+uci set va_eventd.@forwarding[-1].eventName='SIMin'
+uci set va_eventd.@forwarding[-1].target='simin'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='simout'
+uci set va_eventd.@target[-1].enabled='yes'
+uci set va_eventd.@target[-1].type='snmptrap'
+uci set va_eventd.@target[-1].community='public'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='Router: %{serial}:  SIM card #%{p1} removed'
+uci set va_eventd.@target[-1].snmp_version='1'
+uci set va_eventd.@target[-1].acknowledgement_required='0'
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='1'
+uci set va_eventd.@forwarding[-1].className='mobile'
+uci set va_eventd.@forwarding[-1].eventName='SIMout'
+uci set va_eventd.@forwarding[-1].target='simout'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='ETHUP'
+uci set va_eventd.@target[-1].enabled='yes'
+uci set va_eventd.@target[-1].type='snmptrap'
+uci set va_eventd.@target[-1].community='public'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='Router: %{serial}: Ethernet %{p1} up'
+uci set va_eventd.@target[-1].snmp_version='1'
+uci set va_eventd.@target[-1].acknowledgement_required='0'
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='yes'
+uci set va_eventd.@forwarding[-1].className='ethernet'
+uci set va_eventd.@forwarding[-1].eventName='LinkUp'
+uci set va_eventd.@forwarding[-1].target='ETHUP'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='ETHDOWN'
+uci set va_eventd.@target[-1].enabled='yes'
+uci set va_eventd.@target[-1].type='snmptrap'
+uci set va_eventd.@target[-1].community='public'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='Router: %{serial}: Ethernet %{p1} down'
+uci set va_eventd.@target[-1].snmp_version='1'
+uci set va_eventd.@target[-1].acknowledgement_required='0'
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='yes'
+uci set va_eventd.@forwarding[-1].className='ethernet'
+uci set va_eventd.@forwarding[-1].eventName='LinkDown'
+uci set va_eventd.@forwarding[-1].target='ETHDOWN'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='LuciBadPassword'
+uci set va_eventd.@target[-1].enabled='yes'
+uci set va_eventd.@target[-1].type='snmptrap'
+uci set va_eventd.@target[-1].community='public'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='LuCI login attempt: bad password for user %{p1}'
+uci set va_eventd.@target[-1].snmp_version='1'
+uci set va_eventd.@target[-1].acknowledgement_required='0'
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='yes'
+uci set va_eventd.@forwarding[-1].className='auth'
+uci set va_eventd.@forwarding[-1].eventName='BadPasswordLuCI'
+uci set va_eventd.@forwarding[-1].target='LuciBadPassword'
+
+uci add va_eventd target
+uci set va_eventd.@target[-1].name='LuciLogin'
+uci set va_eventd.@target[-1].enabled='yes'
+uci set va_eventd.@target[-1].type='snmptrap'
+uci set va_eventd.@target[-1].community='public'
+uci set va_eventd.@target[-1].target_addr='192.168.100.254'
+uci set va_eventd.@target[-1].suppress_duplicate_forwardings='no'
+uci set va_eventd.@target[-1].template='LuCI login: user %{p1}'
+uci set va_eventd.@target[-1].snmp_version='1'
+uci set va_eventd.@target[-1].acknowledgement_required='0'
+uci add va_eventd forwarding
+uci set va_eventd.@forwarding[-1].enabled='yes'
+uci set va_eventd.@forwarding[-1].className='auth'
+uci set va_eventd.@forwarding[-1].eventName='LoginLuCI'
+uci set va_eventd.@forwarding[-1].target='LuciLogin'
+
+uci commit va_eventd
+/etc/init.d/va_eventd restart
