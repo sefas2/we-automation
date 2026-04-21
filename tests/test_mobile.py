@@ -110,7 +110,7 @@ MOBILE_DETAILS = {
 def test_auto_mode():
     print("\n=== AUTO MODE ===")
 
-    cmds = generate_config('mobile_uci.j2', MOBILE_DETAILS)
+    cmds = generate_config('templates/mobile_uci.j2', MOBILE_DETAILS)
     push_commands(cmds.splitlines())
     time.sleep(15) 
 

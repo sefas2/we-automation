@@ -1,0 +1,39 @@
+uci set network.dsl0=xdsl-device
+uci set network.dsl0.vdsl_xfer_mode=ptm
+uci set network.dsl0.vdsl_annex=auto
+uci set network.dsl0.vdsl_vectoring=normal
+uci set network.dsl0.adsl_xfer_mode=atm
+uci set network.dsl0.adsl_annex=a
+uci set network.dsl0.handshake_tone=auto
+uci set network.dsl0.auto_default=none
+uci set network.dsl0.enabled=1
+uci set network.dsl0.line_mode=auto
+uci set network.VDSLPPPoE=interface
+uci set network.VDSLPPPoE.proto=pppoe
+uci set network.VDSLPPPoE.username=grx
+uci set network.VDSLPPPoE.password=grx
+uci set network.VDSLPPPoE.ifname=ptm0
+uci set network.VDSLPPPoE.defaultroute=1
+uci set network.VDSLPPPoE.pppd_options=debug
+uci set network.VDSLPPPoE.metric=1
+uci set network.VDSLPPPoE.mtu=1460
+uci set network.PPPoE=interface
+uci set network.PPPoE.proto=pppoe
+uci set network.PPPoE.pppd_options=debug debug
+uci set network.PPPoE.ifname=nas0
+uci set network.PPPoE.ac=cisco
+uci set network.PPPoE.service=cisco
+uci set network.PPPoE.monitored=0
+uci set network.PPPoE.ipv4_rp_filter=0
+uci set network.PPPoE.username=grx
+uci set network.PPPoE.password=grx
+uci set network.PPPoE.ipv6mode=none
+uci set network.atm=atm-bridge
+uci set network.atm.unit=0
+uci set network.atm.vpi=0
+uci set network.atm.vci=35
+uci set network.atm.encaps=llc
+uci set network.atm.payload=bridged
+
+uci commit network
+/etc/init.d/network restart

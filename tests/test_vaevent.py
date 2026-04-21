@@ -13,11 +13,11 @@ PORT = 162
 with open('config.yaml', 'r') as f:
     config = yaml.safe_load(f)
 
-with open('va_eventd_config.j2', 'r') as v:
+with open('templates/va_eventd_config.j2', 'r') as v:
     va_template = Template(v.read())
 rendered_va_template = va_template.render()
 
-with open('snmpd_config.j2', 'r') as s:
+with open('templates/snmpd_config.j2', 'r') as s:
     snmp_template = Template(s.read())
 rendered_snmp_template = snmp_template.render()
 

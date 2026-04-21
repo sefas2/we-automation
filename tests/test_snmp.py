@@ -9,7 +9,7 @@ with open('config.yaml', 'r') as f:
     inventory = yaml.safe_load(f)
 
 # Load SNMP template
-with open('snmpd_config.j2', 'r') as s:
+with open('templates/snmpd_config.j2', 'r') as s:
     template = Template(s.read()).render()
 
 

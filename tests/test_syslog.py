@@ -13,11 +13,11 @@ port = 514
 with open('config.yaml', 'r') as f:
     config = yaml.safe_load(f)
 
-with open('syslog_config.j2', 'r') as v:
+with open('templates/syslog_config.j2', 'r') as v:
     syslog_template = Template(v.read())
 rendered_syslog_template = syslog_template.render()
 
-with open('snmpd_config.j2', 'r') as s:
+with open('templates/snmpd_config.j2', 'r') as s:
     snmp_template = Template(s.read())
 rendered_snmp_template = snmp_template.render()
 

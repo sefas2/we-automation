@@ -11,7 +11,7 @@ Neighbor_Ip = '192.168.100.2'
 with open('config.yaml', 'r') as f:
     inventory = yaml.safe_load(f)
 
-with open('vlan_config.j2', 'r') as v:
+with open('templates/vlan_config.j2', 'r') as v:
     template = (Template(v.read()).render()).splitlines()
 
 def push_config():

@@ -1,0 +1,12 @@
+uci delete network.lan0
+uci delete network.lan1
+uci delete network.lan2
+uci delete network.lan3
+uci set network.lan0='interface'
+uci set network.lan0.type='bridge'
+uci set network.lan0.ifname='portA portB portC portD'
+uci set network.lan0.proto='static'
+uci set network.lan0.ipaddr='192.168.100.1'
+uci set network.lan0.netmask='255.255.255.0'
+uci commit network
+/etc/init.d/network restart

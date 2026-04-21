@@ -9,7 +9,7 @@ import pytest
 with open('config.yaml', 'r') as f:
     login = yaml.safe_load(f) 
 
-with open('ntp_config.j2', 'r') as t:
+with open('templates/ntp_config.j2', 'r') as t:
     template = Template(t.read())
 rendered = template.render()
 

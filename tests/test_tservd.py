@@ -8,7 +8,7 @@ import pytest
 with open('config.yaml', 'r') as f:
     inventory = yaml.safe_load(f)
 
-with open('tserv.j2', 'r') as t:
+with open('templates/tserv.j2', 'r') as t:
     syslog_template = Template(t.read()).render()
 
 host = inventory['router']['host']

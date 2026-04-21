@@ -1,0 +1,27 @@
+uci delete network.dsl0
+uci delete network.VDSLPPPoE
+uci delete network.PPPoE
+uci delete network.atm
+uci set network.dsl0='xdsl-device'
+uci set network.dsl0.enabled='1'
+uci set network.dsl0.vdsl_xfer_mode='ptm'
+uci set network.dsl0.vdsl_annex='auto'
+uci set network.dsl0.vdsl_vectoring='normal'
+uci set network.dsl0.adsl_xfer_mode='atm'
+uci set network.dsl0.adsl_annex='a'
+uci set network.dsl0.handshake_tone='auto'
+uci set network.dsl0.line_mode='auto'
+uci set network.dsl0.annex='a'
+uci set network.dsl0.fwannex='a'
+uci set network.xDSL='interface'
+uci set network.xDSL.proto='pppoa'
+uci set network.xDSL.encaps='vc'
+uci set network.xDSL.monitored='0'
+uci set network.xDSL.username='grx'
+uci set network.xDSL.password='grx'
+uci set network.xDSL.vci='35'
+uci set network.xDSL.vpi='0'
+uci set network.xDSL.pppd_options='debug debug'
+
+uci commit network
+/etc/init.d/network restart
